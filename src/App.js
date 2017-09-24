@@ -1,18 +1,35 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Link, Switch, Route } from 'react-router-dom'
+
+import Booking from './component/booking/Booking'
+import Promotion from './component/promotion/Promotion'
+
+const Header = () => (
+  <header>
+    <nav>
+      <ul>
+        <li><Link to='/'>Booking</Link></li>
+        <li><Link to='/promotion'>Promotion</Link></li>
+      </ul>
+    </nav>
+  </header>
+)
+
+const Main = () => (
+  <main>
+    <Switch>
+      <Route exact path='/' component={Booking} />
+      <Route exact path='/promotion' component={Promotion} />
+    </Switch>
+  </main>
+)
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <Header />
+        <Main />
       </div>
     );
   }
