@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { Link, Switch, Route } from 'react-router-dom'
+import { Nav, NavItem } from 'react-bootstrap';
 
 import Booking from './component/booking/Booking'
 import Promotion from './component/promotion/Promotion'
 
 const Header = () => (
-  <header>
-    <nav>
-      <ul>
-        <li><Link to='/'>Booking</Link></li>
-        <li><Link to='/promotion'>Promotion</Link></li>
-      </ul>
-    </nav>
-  </header>
+  <Nav bsStyle="pills" justified>
+    <NavItem eventKey={1} href="/">Booking</NavItem>
+    <NavItem eventKey={2} href="/promotion">Promotion</NavItem>
+  </Nav>
 )
 
 const Main = () => (
