@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom'
-import { Nav, NavItem } from 'react-bootstrap';
+import { Col, Grid, Nav, NavItem, Row } from 'react-bootstrap';
 
 import Booking from './components/Booking'
 import Promotion from './components/Promotion'
+
+import './App.css';
 
 const Header = () => (
   <Nav bsStyle="pills" justified>
@@ -24,10 +26,14 @@ const Main = () => (
 class App extends Component {
   render() {
     return (
-      <div>
-        <Header />
-        <Main />
-      </div>
+      <Grid>
+        <Row>
+          <Col xs={12}>
+            <Header />
+            <Main />
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }

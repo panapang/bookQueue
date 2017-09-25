@@ -1,14 +1,17 @@
 import React from 'react';
-import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Button, Col, ControlLabel, FormGroup, FormControl, Panel, Row, Well } from 'react-bootstrap';
+import PromotionChooser from './PromotionChooser';
+
+const listTemp = [{id:1, name: "A"}, {id:2, name: "B"}];
 
 class Booking extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
       numberOfGuests: 0,
       promotionCode: '',
+      listPromotion: listTemp
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -31,45 +34,42 @@ class Booking extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Booking</h1>
-        <hr />
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="formName">
-            <ControlLabel>Name</ControlLabel>
-            <FormControl
-              name="name"
-              type="text"
-              value={this.state.name}
-              placeholder="Enter name"
-              onChange={this.handleInputChange}
-            />
-          </FormGroup>
+      <Panel>
+        <Row>
+          <Col xs={12}>
+            <h1>Booking</h1>
+            <hr />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <form onSubmit={this.handleSubmit}>
+              <FormGroup controlId="formNumberOfGuests">
+                <ControlLabel>Number of guests</ControlLabel>
+                <FormControl
+                  name="numberOfGuests"
+                  type="number"
+                  value={this.state.numberOfGuests}
+                  placeholder="Enter Number of Guests"
+                  onChange={this.handleInputChange}
+                />
+              </FormGroup>
 
-          <FormGroup controlId="formNumberOfGuests">
-            <ControlLabel>Number of guests</ControlLabel>
-            <FormControl
-              name="numberOfGuests"
-              type="number"
-              value={this.state.numberOfGuests}
-              placeholder="Enter Number of Guests"
-              onChange={this.handleInputChange}
-            />
-          </FormGroup>
+              <FormGroup controlId="formControlsSelectMultiple">
+                <ControlLabel>Promotion Code</ControlLabel>
+                <div className="promotion-chooser">
+                  <PromotionChooser list={this.state.listPromotion} />
+                </div>
+              </FormGroup>
 
-          <FormGroup controlId="formPromotionCode" >
-            <ControlLabel>Promotion Code</ControlLabel>
-            <FormControl
-              name="promotionCode"
-              type="text"
-              value={this.state.promotionCode}
-              placeholder="Enter Promotion Code"
-              onChange={this.handleInputChange}
-            />
-          </FormGroup>
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
+              <Button type="submit" bsStyle="primary" bsSize="large" block>Submit</Button>
+            </form>
+          </Col>
+          <Col xs={6}>
+            test
+          </Col>
+        </Row>
+      </Panel>
     );
   }
 }
