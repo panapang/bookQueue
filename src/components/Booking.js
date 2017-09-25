@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Col, ControlLabel, FormGroup, FormControl, Panel, Row, Well } from 'react-bootstrap';
+import { Button, Col, ControlLabel, FormGroup, FormControl, Panel, Row } from 'react-bootstrap';
 import PromotionChooser from './PromotionChooser';
 
-const listTemp = [{id:1, name: "A"}, {id:2, name: "B"}];
+import promotions from '../data/promotions';
 
 class Booking extends React.Component {
 
@@ -10,12 +10,12 @@ class Booking extends React.Component {
     super(props);
     this.state = {
       numberOfGuests: 0,
-      promotionCode: '',
-      listPromotion: listTemp
+      selectedPromotion: []
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePromotionChange = this.handlePromotionChange.bind(this);
   }
 
   handleInputChange(e) {
@@ -30,6 +30,10 @@ class Booking extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+  }
+
+  handlePromotionChange(selectedPromotion) {
+    console.log(selectedPromotion);
   }
 
   render() {
@@ -58,7 +62,7 @@ class Booking extends React.Component {
               <FormGroup controlId="formControlsSelectMultiple">
                 <ControlLabel>Promotion Code</ControlLabel>
                 <div className="promotion-chooser">
-                  <PromotionChooser list={this.state.listPromotion} />
+                  <PromotionChooser listPromotion={promotions} handlePromotionChange={this.handlePromotionChange}/>
                 </div>
               </FormGroup>
 
@@ -66,7 +70,7 @@ class Booking extends React.Component {
             </form>
           </Col>
           <Col xs={6}>
-            test
+            bill = 
           </Col>
         </Row>
       </Panel>

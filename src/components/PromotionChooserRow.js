@@ -15,13 +15,21 @@ class PromotionChooserRow extends React.Component {
   clickHandler() {
     var active = !this.state.active;
     this.setState({ active: active });
+
+    // Notify the PromotionChooser
+    if (active) {
+      this.props.selectedPromotion(this.props.id);
+    } else {
+      this.props.unselectedPromotion(this.props.id);
+    }
   }
 
   render() {
     return (
-      <p className={this.state.active ? 'active' : ''} onClick={this.clickHandler}>
-        {this.props.name} <b>test</b>
-      </p>
+      <div className={this.state.active ? 'active box' : 'box'} onClick={this.clickHandler}>
+        <h4>{this.props.code}</h4>
+        <p>{this.props.description}</p>
+      </div>
     );
   }
 }

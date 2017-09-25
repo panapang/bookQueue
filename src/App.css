@@ -1,12 +1,12 @@
 
-.promotion-chooser{
+.promotion-chooser {
   list-style: none;
   display: inline-block;
   width: 100%;
   text-align: left;
 }
 
-.promotion-chooser p{
+.promotion-chooser .box {
   display: block;
   padding: 15px 20px;
   background-color: #F8F8F8;
@@ -18,24 +18,11 @@
   transition: 0.3s;
 }
 
-.promotion-chooser p b{
-  position: absolute;
-  right: 28px;
-  line-height: 16px;
-  width: 100px;
-  color: #808787;
-  text-align: right;
-}
-
-.promotion-chooser p:hover{
+.promotion-chooser .box:hover {
   background-color:#d8f2f1;
 }
 
-.promotion-chooser p.active{
+.promotion-chooser .box.active {
   color:#fff;
   background-color:#41c7c2;
-}
-
-.promotion-chooser p.active b{
-  color: #fff;
 }
