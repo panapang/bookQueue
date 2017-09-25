@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, FormControl, HelpBlock, ControlLabel } from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 class Booking extends React.Component {
 
@@ -7,8 +7,8 @@ class Booking extends React.Component {
     super(props);
     this.state = {
       name: '',
-      numberOfPeople: 0,
-      promotionCode: ''
+      numberOfGuests: 0,
+      promotionCode: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -16,7 +16,6 @@ class Booking extends React.Component {
   }
 
   handleInputChange(e) {
-
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -24,15 +23,9 @@ class Booking extends React.Component {
     this.setState({
       [name]: value
     });
-
-    /* this.setState({
-      [e.target.name]: e.target.value
-    }); */
   }
 
-
   handleSubmit(e) {
-    //alert('A name was submitted: ' + this.state.value);
     e.preventDefault();
   }
 
@@ -53,13 +46,13 @@ class Booking extends React.Component {
             />
           </FormGroup>
 
-          <FormGroup controlId="formNumberOfPeople">
-            <ControlLabel>Number of people</ControlLabel>
+          <FormGroup controlId="formNumberOfGuests">
+            <ControlLabel>Number of guests</ControlLabel>
             <FormControl
-              name="numberOfPeople"
+              name="numberOfGuests"
               type="number"
-              value={this.state.numberOfPeople}
-              placeholder="Enter Number of people"
+              value={this.state.numberOfGuests}
+              placeholder="Enter Number of Guests"
               onChange={this.handleInputChange}
             />
           </FormGroup>

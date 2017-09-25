@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link, Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import { Nav, NavItem } from 'react-bootstrap';
 
-import Booking from './component/booking/Booking'
-import Promotion from './component/promotion/Promotion'
+import Booking from './components/Booking'
+import Promotion from './components/Promotion'
 
 const Header = () => (
   <Nav bsStyle="pills" justified>
