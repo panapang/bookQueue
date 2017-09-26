@@ -7,12 +7,15 @@ import promotions from '../data/promotions';
 
 class Booking extends React.Component {
 
-
   constructor(props) {
     super(props);
     this.state = {
       numberOfGuests: 0,
-      selectedPromotion: []
+      selectedPromotion: [],
+      totalPrice: 0,
+      discount: 0,
+      grandTotalPrice: 0,
+      promotionCodeMaxDiscount: ""
     };
 
     this.restaurantPricePerPerson = restaurant.price;
@@ -47,19 +50,40 @@ class Booking extends React.Component {
 
   calculateBill(selectedPromotion, numberOfGuests) {
     const promotionCanUse = this.getPromotionCanUse(selectedPromotion, numberOfGuests);
+    const promotionDiscount = this.calculateDiscountFromPromotion(promotionCanUse, numberOfGuests, this.restaurantPricePerPerson);
+    const promotionMaxDiscount = this.findPromotionMaxDiscount(promotionDiscount);
+    const totalPrice = this.calculateTotalPrice(numberOfGuests, this.restaurantPricePerPerson);
 
-    //TODO : implement total price
+    this.setState({
+      totalPrice: totalPrice,
+      discount: Object.keys(promotionMaxDiscount).length > 0 ? promotionMaxDiscount.discount : 0,
+      promotionCodeMaxDiscount: Object.keys(promotionMaxDiscount).length > 0 ? promotionMaxDiscount.promotion.code : 0,
+      grandTotalPrice: totalPrice - (Object.keys(promotionMaxDiscount).length > 0 ? promotionMaxDiscount.discount : 0)
+    })
   }
 
   getPromotionCanUse(selectedPromotion, numberOfGuests) {
+    if (selectedPromotion.length === 0) {
+      return [];
+    }
+
+    let operators = {
+      'and': function (a, b) {
+        return a && b;
+      },
+      'or': function (a, b) {
+        return a || b;
+      }
+    };
+
     return promotions
       .filter(promotion =>
-        eval(
+        operators[promotion.operatorWithPrice](
           (this.isInPromotion(selectedPromotion, promotion.id) &&
             this.validateMinCustomer(promotion.minCust, numberOfGuests) &&
-            this.validateMaxCustomer(promotion.maxCust, numberOfGuests))
-          + (promotion.operatorWithPrice === 'or' ? ' || ' : ' && ') +
-          this.validateMoreThanPrice(promotion.priceMoreThan, this.restaurantPricePerPerson, numberOfGuests)
+            this.validateMaxCustomer(promotion.maxCust, numberOfGuests)
+          ),
+          (this.validateMoreThanPrice(promotion.priceMoreThan, this.restaurantPricePerPerson, numberOfGuests))
         )
       );
   }
@@ -80,12 +104,33 @@ class Booking extends React.Component {
     return priceMoreThan < pricePerPerson * numberOfGuests;
   }
 
-  calculateDiscount(mod, numberOfGuests, discount, restaurantPricePerPerson) {
-    if (mod === 0) {
-      return (numberOfGuests * restaurantPricePerPerson * discount / 100).toFixed(2);
+  calculateDiscountFromPromotion(promotionCanUse, numberOfGuests, restaurantPricePerPerson) {
+    if (promotionCanUse.length === 0) {
+      return [];
     }
 
-    return ((numberOfGuests - (numberOfGuests % mod)) * restaurantPricePerPerson * discount / 100).toFixed(2);
+    return promotionCanUse.map(
+      promotion => Object.assign({}, {
+        discount: this.calculateDiscount(promotion.mod, numberOfGuests, promotion.discount, restaurantPricePerPerson),
+        promotion: promotion
+      })
+    );
+  }
+
+  calculateDiscount(mod, numberOfGuests, discount, restaurantPricePerPerson) {
+    if (mod === 0) {
+      return Number((numberOfGuests * restaurantPricePerPerson * discount / 100).toFixed(2));
+    }
+
+    return Number(((numberOfGuests - (numberOfGuests % mod)) * restaurantPricePerPerson * discount / 100).toFixed(2));
+  }
+
+  calculateTotalPrice(numberOfGuests, restaurantPricePerPerson) {
+    return numberOfGuests * restaurantPricePerPerson;
+  }
+
+  findPromotionMaxDiscount(promotionDiscount) {
+    return promotionDiscount.length === 0 ? [] : promotionDiscount.reduce((prev, curr) => (prev.discount > curr.discount) ? prev : curr)
   }
 
   render() {
@@ -122,7 +167,13 @@ class Booking extends React.Component {
             </form>
           </Col>
           <Col xs={6}>
-            bill =
+            The best promotion is = {this.state.promotionCodeMaxDiscount}
+            <br />
+            Total Price = {this.state.totalPrice}
+            <br />
+            Discount Price = {this.state.discount}
+            <br />
+            Grand Total Price = {this.state.grandTotalPrice}
           </Col>
         </Row>
       </Panel>
