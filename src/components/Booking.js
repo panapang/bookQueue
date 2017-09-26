@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Col, ControlLabel, FormGroup, FormControl, Panel, Row } from 'react-bootstrap';
 import PromotionChooser from './PromotionChooser';
 
+import restaurant from '../data/restaurant';
 import promotions from '../data/promotions';
 
 class Booking extends React.Component {
@@ -30,10 +31,45 @@ class Booking extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.calculateBill();
   }
 
   handlePromotionChange(selectedPromotion) {
-    console.log(selectedPromotion);
+    this.setState({ selectedPromotion: selectedPromotion });
+  }
+
+  calculateBill() {
+    const numberOfGuests = this.state.numberOfGuests;
+    const selectedPromotion = this.state.selectedPromotion;
+
+    let promotionCanUse = promotions
+      .filter(promotion =>
+        eval(
+          (this.isInPromotion(selectedPromotion, promotion.id) &&
+            this.validateMinCustomer(promotion.minCust, numberOfGuests) &&
+            this.validateMaxCustomer(promotion.maxCust, numberOfGuests))
+           + (promotion.operatorWithPrice === 'or'?  ' || ':' && ') +
+          this.validateMoreThanPrice(promotion.priceMoreThan, restaurant.price, numberOfGuests)
+        )
+      );
+
+    console.log(promotionCanUse);
+  }
+
+  isInPromotion(selectedPromotion, id) {
+    return selectedPromotion.includes(id);
+  }
+
+  validateMinCustomer(minCust, numberOfGuests) {
+    return minCust === 0 || minCust <= numberOfGuests;
+  }
+
+  validateMaxCustomer(maxCust, numberOfGuests) {
+    return maxCust === 0 || maxCust > numberOfGuests;
+  }
+
+  validateMoreThanPrice(priceMoreThan, pricePerPerson, numberOfGuests) {
+    return priceMoreThan < pricePerPerson * numberOfGuests;
   }
 
   render() {
@@ -62,7 +98,7 @@ class Booking extends React.Component {
               <FormGroup controlId="formControlsSelectMultiple">
                 <ControlLabel>Promotion Code</ControlLabel>
                 <div className="promotion-chooser">
-                  <PromotionChooser listPromotion={promotions} handlePromotionChange={this.handlePromotionChange}/>
+                  <PromotionChooser listPromotion={promotions} handlePromotionChange={this.handlePromotionChange} />
                 </div>
               </FormGroup>
 
@@ -70,7 +106,7 @@ class Booking extends React.Component {
             </form>
           </Col>
           <Col xs={6}>
-            bill = 
+            bill =
           </Col>
         </Row>
       </Panel>
