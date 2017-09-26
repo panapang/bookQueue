@@ -31,29 +31,34 @@ class Booking extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.calculateBill();
+
+    const numberOfGuests = this.state.numberOfGuests;
+    const selectedPromotion = this.state.selectedPromotion;
+
+    this.calculateBill(selectedPromotion, numberOfGuests);
   }
 
   handlePromotionChange(selectedPromotion) {
     this.setState({ selectedPromotion: selectedPromotion });
   }
 
-  calculateBill() {
-    const numberOfGuests = this.state.numberOfGuests;
-    const selectedPromotion = this.state.selectedPromotion;
+  calculateBill(selectedPromotion, numberOfGuests) {
+    const promotionCanUse = this.getPromotionCanUse(selectedPromotion, numberOfGuests);
 
-    let promotionCanUse = promotions
+    this.calculate();
+  }
+
+  getPromotionCanUse(selectedPromotion, numberOfGuests) {
+    return promotions
       .filter(promotion =>
         eval(
           (this.isInPromotion(selectedPromotion, promotion.id) &&
             this.validateMinCustomer(promotion.minCust, numberOfGuests) &&
             this.validateMaxCustomer(promotion.maxCust, numberOfGuests))
-           + (promotion.operatorWithPrice === 'or'?  ' || ':' && ') +
+          + (promotion.operatorWithPrice === 'or' ? ' || ' : ' && ') +
           this.validateMoreThanPrice(promotion.priceMoreThan, restaurant.price, numberOfGuests)
         )
       );
-
-    console.log(promotionCanUse);
   }
 
   isInPromotion(selectedPromotion, id) {
@@ -70,6 +75,10 @@ class Booking extends React.Component {
 
   validateMoreThanPrice(priceMoreThan, pricePerPerson, numberOfGuests) {
     return priceMoreThan < pricePerPerson * numberOfGuests;
+  }
+
+  calculate() {
+
   }
 
   render() {
