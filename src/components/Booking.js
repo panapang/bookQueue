@@ -7,12 +7,15 @@ import promotions from '../data/promotions';
 
 class Booking extends React.Component {
 
+
   constructor(props) {
     super(props);
     this.state = {
       numberOfGuests: 0,
       selectedPromotion: []
     };
+
+    this.restaurantPricePerPerson = restaurant.price;
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,6 +32,10 @@ class Booking extends React.Component {
     });
   }
 
+  handlePromotionChange(selectedPromotion) {
+    this.setState({ selectedPromotion: selectedPromotion });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
@@ -38,14 +45,10 @@ class Booking extends React.Component {
     this.calculateBill(selectedPromotion, numberOfGuests);
   }
 
-  handlePromotionChange(selectedPromotion) {
-    this.setState({ selectedPromotion: selectedPromotion });
-  }
-
   calculateBill(selectedPromotion, numberOfGuests) {
     const promotionCanUse = this.getPromotionCanUse(selectedPromotion, numberOfGuests);
 
-    this.calculate();
+    //TODO : implement total price
   }
 
   getPromotionCanUse(selectedPromotion, numberOfGuests) {
@@ -56,7 +59,7 @@ class Booking extends React.Component {
             this.validateMinCustomer(promotion.minCust, numberOfGuests) &&
             this.validateMaxCustomer(promotion.maxCust, numberOfGuests))
           + (promotion.operatorWithPrice === 'or' ? ' || ' : ' && ') +
-          this.validateMoreThanPrice(promotion.priceMoreThan, restaurant.price, numberOfGuests)
+          this.validateMoreThanPrice(promotion.priceMoreThan, this.restaurantPricePerPerson, numberOfGuests)
         )
       );
   }
@@ -77,8 +80,12 @@ class Booking extends React.Component {
     return priceMoreThan < pricePerPerson * numberOfGuests;
   }
 
-  calculate() {
+  calculateDiscount(mod, numberOfGuests, discount, restaurantPricePerPerson) {
+    if (mod === 0) {
+      return (numberOfGuests * restaurantPricePerPerson * discount / 100).toFixed(2);
+    }
 
+    return ((numberOfGuests - (numberOfGuests % mod)) * restaurantPricePerPerson * discount / 100).toFixed(2);
   }
 
   render() {
