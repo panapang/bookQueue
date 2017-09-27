@@ -100,10 +100,10 @@ describe('<Booking />', () => {
     expect(wrapper.instance().calculateTotalPrice(10, 10)).to.equal(100);
   });
 
-  it('should return 0 when findPromotionMaxDiscount without promotionDiscount', function () {
-    expect(wrapper.instance().findPromotionMaxDiscount(null)).to.equal(0);
-    expect(wrapper.instance().findPromotionMaxDiscount("")).to.equal(0);
-    expect(wrapper.instance().findPromotionMaxDiscount([])).to.equal(0);
+  it('should return empty array when findPromotionMaxDiscount without promotionDiscount', function () {
+    expect(wrapper.instance().findPromotionMaxDiscount(null)).to.be.an('array').that.is.empty;
+    expect(wrapper.instance().findPromotionMaxDiscount("")).to.be.an('array').that.is.empty;
+    expect(wrapper.instance().findPromotionMaxDiscount([])).to.be.an('array').that.is.empty;
   });
 
 });
