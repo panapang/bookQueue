@@ -78,8 +78,9 @@ class Booking extends React.Component {
 
     return promotions
       .filter(promotion =>
+        this.isInPromotion(selectedPromotion, promotion.id) &&
         operators[promotion.operatorWithPrice](
-          (this.isInPromotion(selectedPromotion, promotion.id) &&
+          (
             this.validateMinCustomer(promotion.minCust, numberOfGuests) &&
             this.validateMaxCustomer(promotion.maxCust, numberOfGuests)
           ),
