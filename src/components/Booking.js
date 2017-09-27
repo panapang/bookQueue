@@ -131,7 +131,10 @@ class Booking extends React.Component {
   }
 
   findPromotionMaxDiscount(promotionDiscount) {
-    return promotionDiscount.length === 0 ? [] : promotionDiscount.reduce((prev, curr) => (prev.discount > curr.discount) ? prev : curr)
+    if (!promotionDiscount || promotionDiscount.length === 0 ) {
+      return 0;
+    }
+    return promotionDiscount.reduce((prev, curr) => (prev.discount > curr.discount) ? prev : curr);
   }
 
   render() {
