@@ -6,13 +6,17 @@ class PromotionChooserRow extends React.Component {
     super(props);
 
     this.state = {
-      active: false
+      active: this.props.isAutoUse
     };
 
     this.clickHandler = this.clickHandler.bind(this);
   }
 
   clickHandler() {
+    if (this.props.isAutoUse) {
+      return;
+    }
+
     var active = !this.state.active;
     this.setState({ active: active });
 

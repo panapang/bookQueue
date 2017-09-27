@@ -3,9 +3,6 @@ import { Button, Col, ControlLabel, FormGroup, FormControl, Panel, Row } from 'r
 import PromotionChooser from './PromotionChooser';
 import Api from "../actions/Api";
 
-import restaurant from '../data/restaurant';
-import promotions from '../data/promotions';
-
 class Booking extends React.Component {
 
   constructor(props) {
@@ -16,11 +13,17 @@ class Booking extends React.Component {
       totalPrice: 0,
       discount: 0,
       grandTotalPrice: 0,
-      promotionCodeMaxDiscount: ""
+      promotionCodeMaxDiscount: "",
+      promotions: [],
+      restaurantPricePerPerson: 0
     };
 
-    Api.getRestaurant(docs => {
-      this.restaurantPricePerPerson = docs? docs.price: 0;
+    Api.getRestaurant(res => {
+      this.setState({ restaurantPricePerPerson: res ? res.price : 0 });
+    });
+
+    Api.getPromotions(res => {
+      this.setState({ promotions: res });
     });
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -53,9 +56,9 @@ class Booking extends React.Component {
 
   calculateBill(selectedPromotion, numberOfGuests) {
     const promotionCanUse = this.getPromotionCanUse(selectedPromotion, numberOfGuests);
-    const promotionDiscount = this.calculateDiscountFromPromotion(promotionCanUse, numberOfGuests, this.restaurantPricePerPerson);
+    const promotionDiscount = this.calculateDiscountFromPromotion(promotionCanUse, numberOfGuests, this.state.restaurantPricePerPerson);
     const promotionMaxDiscount = this.findPromotionMaxDiscount(promotionDiscount);
-    const totalPrice = this.calculateTotalPrice(numberOfGuests, this.restaurantPricePerPerson);
+    const totalPrice = this.calculateTotalPrice(numberOfGuests, this.state.restaurantPricePerPerson);
 
     this.setState({
       totalPrice: totalPrice,
@@ -66,10 +69,6 @@ class Booking extends React.Component {
   }
 
   getPromotionCanUse(selectedPromotion, numberOfGuests) {
-    if (selectedPromotion.length === 0) {
-      return [];
-    }
-
     let operators = {
       'and': function (a, b) {
         return a && b;
@@ -79,15 +78,18 @@ class Booking extends React.Component {
       }
     };
 
-    return promotions
+    return this.state.promotions
       .filter(promotion =>
-        this.isInPromotion(selectedPromotion, promotion.id) &&
-        operators[promotion.operatorWithPrice](
-          (
-            this.validateMinCustomer(promotion.minCust, numberOfGuests) &&
-            this.validateMaxCustomer(promotion.maxCust, numberOfGuests)
-          ),
-          (this.validateMoreThanPrice(promotion.priceMoreThan, this.restaurantPricePerPerson, numberOfGuests))
+        promotion.isAutoUse ||
+        (
+          this.isInPromotion(selectedPromotion, promotion.id) &&
+          operators[promotion.operatorWithPrice](
+            (
+              this.validateMinCustomer(promotion.minCust, numberOfGuests) &&
+              this.validateMaxCustomer(promotion.maxCust, numberOfGuests)
+            ),
+            (this.validateMoreThanPrice(promotion.priceMoreThan, this.restaurantPricePerPerson, numberOfGuests))
+          )
         )
       );
   }
@@ -134,7 +136,7 @@ class Booking extends React.Component {
   }
 
   findPromotionMaxDiscount(promotionDiscount) {
-    if (!promotionDiscount || promotionDiscount.length === 0 ) {
+    if (!promotionDiscount || promotionDiscount.length === 0) {
       return [];
     }
     return promotionDiscount.reduce((prev, curr) => (prev.discount > curr.discount) ? prev : curr);
@@ -166,7 +168,7 @@ class Booking extends React.Component {
               <FormGroup controlId="formControlsSelectMultiple">
                 <ControlLabel>Promotion Code</ControlLabel>
                 <div className="promotion-chooser">
-                  <PromotionChooser listPromotion={promotions} handlePromotionChange={this.handlePromotionChange} />
+                  <PromotionChooser listPromotion={this.state.promotions} handlePromotionChange={this.handlePromotionChange} />
                 </div>
               </FormGroup>
 
@@ -176,11 +178,11 @@ class Booking extends React.Component {
           <Col xs={6}>
             The best promotion is = {this.state.promotionCodeMaxDiscount}
             <br />
-            Total Price = {this.state.totalPrice}
+            Total Price = {this.state.totalPrice.toFixed(2)}
             <br />
-            Discount Price = {this.state.discount}
+            Discount Price = {this.state.discount.toFixed(2)}
             <br />
-            Grand Total Price = {this.state.grandTotalPrice}
+            Grand Total Price = {this.state.grandTotalPrice.toFixed(2)}
           </Col>
         </Row>
       </Panel>

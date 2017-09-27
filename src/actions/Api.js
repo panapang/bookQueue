@@ -7,7 +7,7 @@ function getRestaurant(cb) {
         .then(cb);
 }
 
-function promotions(query, cb) {
+function getPromotions(cb) {
     return fetch('promotions', {
         accept: "application/json"
     })
@@ -15,7 +15,6 @@ function promotions(query, cb) {
         .then(parseJSON)
         .then(cb);
 }
-
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -32,5 +31,5 @@ function parseJSON(response) {
     return response.json();
 }
 
-const Api = { getRestaurant };
+const Api = { getRestaurant, getPromotions };
 export default Api;
