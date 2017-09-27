@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Col, ControlLabel, FormGroup, FormControl, Panel, Row } from 'react-bootstrap';
 import PromotionChooser from './PromotionChooser';
+import Api from "../actions/Api";
 
 import restaurant from '../data/restaurant';
 import promotions from '../data/promotions';
@@ -18,7 +19,9 @@ class Booking extends React.Component {
       promotionCodeMaxDiscount: ""
     };
 
-    this.restaurantPricePerPerson = restaurant.price;
+    Api.getRestaurant(docs => {
+      this.restaurantPricePerPerson = docs? docs.price: 0;
+    });
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

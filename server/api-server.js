@@ -25,7 +25,7 @@ app.post('/promotions/', function (req, res) {
 });
 
 app.get('/promotions/', function (req, res) {
-    db.find({ table: 'promotions' }).sort({ id: -1 }).exec(function (err, docs) {
+    db.find({ table: 'promotions' }).sort({ id: 1 }).exec(function (err, docs) {
         if (err) {
             res.statusCode = 404;
             res.json(err);
@@ -42,7 +42,7 @@ app.get('/restaurant/', function (req, res) {
             res.json(err);
         };
 
-        res.json(docs);
+        res.json(docs[0]);
     });
 });
 
