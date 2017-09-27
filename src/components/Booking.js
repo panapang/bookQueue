@@ -80,9 +80,8 @@ class Booking extends React.Component {
 
     return this.state.promotions
       .filter(promotion =>
-        promotion.isAutoUse ||
+        (promotion.isAutoUse || this.isInPromotion(selectedPromotion, promotion.id)) &&
         (
-          this.isInPromotion(selectedPromotion, promotion.id) &&
           operators[promotion.operatorWithPrice](
             (
               this.validateMinCustomer(promotion.minCust, numberOfGuests) &&
