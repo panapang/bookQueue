@@ -17,12 +17,11 @@ function getPromotions(cb) {
 }
 
 function createPromotion(promotion) {
-    console.log("in api createPromotion");
     const headers = { 'Content-Type': 'application/json' };
     const request = new Request('/promotions', {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify({ promotion: promotion })
+        body: JSON.stringify(promotion)
     });
 
 

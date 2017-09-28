@@ -19,7 +19,10 @@ app.use(function (req, res, next) {
 app.use(bodyParser.json());
 
 app.post('/promotions/', function (req, res) {
-    db.insert(req.body, function (err, newDoc) {
+    let data = req.body;
+    data['table'] = 'promotions';
+
+    db.insert(data, function (err, newDoc) {
         res.json(newDoc);
     })
 });
