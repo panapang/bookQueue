@@ -41,7 +41,7 @@ app.delete('/promotions/:id', function (req, res) {
 });
 
 app.get('/promotions/', function (req, res) {
-    db.find({ table: 'promotions' }).sort({ id: 1 }).exec(function (err, docs) {
+    db.find({ table: 'promotions' }).exec(function (err, docs) {
         if (err) {
             res.statusCode = 404;
             res.json(err);
@@ -64,6 +64,17 @@ app.get('/promotions/:id', function (req, res) {
 
 app.get('/restaurant/', function (req, res) {
     db.findOne({ table: 'restaurant' }).exec(function (err, docs) {
+        if (err) {
+            res.statusCode = 404;
+            res.json(err);
+        };
+
+        res.json(docs);
+    });
+});
+
+app.get('/tables/', function (req, res) {
+    db.find({ table: 'table' }).sort({ name: 1 }).exec(function (err, docs) {
         if (err) {
             res.statusCode = 404;
             res.json(err);
@@ -111,6 +122,31 @@ app.post('/reserve/', function (req, res) {
             res.json({ isFull: true });
         }
     });
+});
+
+app.post('/pay/', function (req, res) {
+    const data = req.body;
+    db.findOne({ table: 'table', name: data.name })
+        .exec(function (err, docs) {
+            if (err) {
+                res.statusCode = 404;
+                res.json(err);
+            };
+
+            if (docs && docs._id) {
+                //overide
+                docs['isReserved'] = false;
+
+                //set
+                docs['reserved'] = null;
+
+                db.update({ _id: docs._id }, { $set: docs });
+
+                res.json(docs);
+            } else {
+                res.json({ err: "cannot update" });
+            }
+        });
 });
 
 var server = app.listen(3001, function () {

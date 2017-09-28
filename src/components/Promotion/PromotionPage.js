@@ -23,13 +23,15 @@ class PromotionPage extends React.Component {
       }
     };
 
-    Api.getPromotion(props.match.params._id).then(res => (
-      res ? this.setState({ promotion: res }) : this.props.history.push('/promotions')
-    ));
-
     this.savePromotion = this.savePromotion.bind(this);
     this.updatePromotionState = this.updatePromotionState.bind(this);
     this.deletePromotion = this.deletePromotion.bind(this);
+  }
+
+  componentDidMount() {
+    Api.getPromotion(this.props.match.params._id).then(res => (
+      res ? this.setState({ promotion: res }) : this.props.history.push('/promotions')
+    ))
   }
 
   savePromotion(e) {
@@ -59,7 +61,7 @@ class PromotionPage extends React.Component {
       <div>
         <h2>Edit Promotion</h2>
 
-        <Button bsStyle="danger" onClick={this.deletePromotion}>Delete</Button>
+        <Button bsStyle="danger" className="pull-right" onClick={this.deletePromotion}>Delete</Button>
 
         <PromotionForm
           promotion={this.state.promotion}

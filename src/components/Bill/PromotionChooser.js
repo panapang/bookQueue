@@ -13,7 +13,6 @@ class PromotionChooser extends React.Component {
     this.selectedPromotion = this.selectedPromotion.bind(this);
     this.unselectedPromotion = this.unselectedPromotion.bind(this);
     this.callback = this.callback.bind(this);
-
   }
 
   selectedPromotion(id) {

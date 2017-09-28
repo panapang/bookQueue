@@ -1,7 +1,11 @@
 import React from 'react';
 import { Button, Col, ControlLabel, FormGroup, FormControl, Panel, Row } from 'react-bootstrap';
+
 import PromotionChooser from './PromotionChooser';
+import TableChooser from './TableChooser';
+
 import Api from '../../actions/Api';
+import TableApi from '../../actions/TableApi';
 
 class Bill extends React.Component {
 
@@ -15,9 +19,21 @@ class Bill extends React.Component {
       grandTotalPrice: 0,
       promotionCodeMaxDiscount: "",
       promotions: [],
-      restaurantPricePerPerson: 0
+      restaurantPricePerPerson: 0,
+      selectedTable: "",
+      tables: []
     };
 
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePromotionChange = this.handlePromotionChange.bind(this);
+
+    this.handleTableClick = this.handleTableClick.bind(this);
+    this.handlePayClick = this.handlePayClick.bind(this);
+    this.handleClearClick = this.handleClearClick.bind(this);
+  }
+
+  componentDidMount() {
     Api.getRestaurant(res => {
       this.setState({ restaurantPricePerPerson: res ? res.price : 0 });
     });
@@ -26,9 +42,9 @@ class Bill extends React.Component {
       this.setState({ promotions: res });
     });
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePromotionChange = this.handlePromotionChange.bind(this);
+    TableApi.getTables(res => {
+      this.setState({ tables: res });
+    });
   }
 
   handleInputChange(e) {
@@ -52,6 +68,23 @@ class Bill extends React.Component {
     const selectedPromotion = this.state.selectedPromotion;
 
     this.calculateBill(selectedPromotion, numberOfGuests);
+  }
+
+  handleTableClick(reserveData) {
+    this.setState({
+      selectedTable: reserveData.name,
+      numberOfGuests: Number(reserveData.guests)
+    });
+  }
+
+  handlePayClick() {
+    TableApi.pay(this.state.selectedTable).then(res => {
+      window.location.reload();
+    });
+  }
+
+  handleClearClick() {
+    this.setState({ selectedTable: "", numberOfGuests: 0, selectedPromotion: [] });
   }
 
   calculateBill(selectedPromotion, numberOfGuests) {
@@ -164,6 +197,10 @@ class Bill extends React.Component {
                 />
               </FormGroup>
 
+              <ControlLabel>OR Choose Table</ControlLabel>
+
+              <TableChooser tables={this.state.tables} handleTableClick={this.handleTableClick} />
+
               <FormGroup controlId="formControlsSelectMultiple">
                 <ControlLabel>Promotion Code</ControlLabel>
                 <div className="promotion-chooser">
@@ -171,7 +208,7 @@ class Bill extends React.Component {
                 </div>
               </FormGroup>
 
-              <Button type="submit" bsStyle="primary" bsSize="large" block>Submit</Button>
+              <Button type="submit" bsStyle="primary" bsSize="large" block>Calculate Bill</Button>
             </form>
           </Col>
           <Col xs={6}>
@@ -182,6 +219,10 @@ class Bill extends React.Component {
             Discount Price = {this.state.discount.toFixed(2)}
             <br />
             Grand Total Price = {this.state.grandTotalPrice.toFixed(2)}
+
+            <div hidden={this.state.grandTotalPrice === 0}>
+              <Button bsStyle="success" bsSize="large" block onClick={this.handlePayClick}>Pay</Button>
+            </div>
           </Col>
         </Row>
       </Panel>
