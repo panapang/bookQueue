@@ -1,5 +1,29 @@
-{"table":"promotions","id":1,"code":"LUCKY ONE","description":"Discount 15% for coupon code \"LUCKYONE\" or the bill is more than 1000 Bath.","discount":15,"minCust":0,"maxCust":0,"operatorWithPrice":"or","priceMoreThan":1000,"mod":0,"isAutoUse":false,"_id":"23UdoeIuaNbkMkaw"}
-{"table":"promotions","id":2,"code":"4PAY3","description":"Come 4 pay 3 when they present coupon code as \"4PAY3\"","discount":25,"minCust":4,"maxCust":0,"operatorWithPrice":"and","priceMoreThan":0,"mod":4,"isAutoUse":false,"_id":"2od5eIuakblM6a2"}
+{"table":"table","name":"A2","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"13EqoYuoma8REWoh"}
+{"code":"LUCKY ONE","description":"Discount 15% for coupon code \"LUCKYONE\" or the bill is more than 1000 Bath.","table":"promotions","discount":15,"minCust":0,"maxCust":0,"operatorWithPrice":"or","priceMoreThan":1000,"mod":0,"isAutoUse":false,"_id":"23UdoeIuaNbkMkaw"}
+{"table":"table","name":"A9","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"25QUrRb1vvOcHlVu"}
+{"code":"4PAY3","description":"Come 4 pay 3 when they present coupon code as \"4PAY3\"","table":"promotions","discount":25,"minCust":4,"maxCust":0,"operatorWithPrice":"and","priceMoreThan":0,"mod":4,"isAutoUse":false,"_id":"2od5eIuakblM6a2"}
+{"table":"table","name":"C2","zone":"B","minCust":3,"maxCust":4,"isReserved":false,"_id":"3a3VQro1jBcWUq4u"}
+{"table":"table","name":"C4","zone":"B","minCust":3,"maxCust":4,"isReserved":false,"_id":"5HGOvyFgS45SbnuF"}
 {"table":"restaurant","price":459,"_id":"67UdoXIuaNbkMkTw"}
-{"table":"promotions","id":3,"code":"LUCKY TWO","description":"Discount 20% for 2 customer when they present a coupon code as \"LUCKY TWO\"","discount":20,"minCust":2,"maxCust":0,"operatorWithPrice":"and","priceMoreThan":0,"mod":2,"isAutoUse":false,"_id":"t4UdoaPubNbkMia3"}
-{"table":"promotions","id":4,"code":"","description":"Discount 25% when the bill is over 6000 Bath but it exclude all promotion.","discount":25,"minCust":0,"maxCust":0,"operatorWithPrice":"and","priceMoreThan":6000,"mod":0,"isAutoUse":true,"_id":"tokdoeBuaNbkFka4"}
+{"table":"table","name":"B2","zone":"B","minCust":2,"maxCust":2,"isReserved":false,"_id":"C6hkEN8T9JEEdOT9"}
+{"table":"table","name":"A8","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"DiCDuGZpog5YdnJU"}
+{"table":"table","name":"A10","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"HTww8ruAu6FovMJY"}
+{"table":"table","name":"A7","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"M9HbbC2wHeLLNvHw"}
+{"table":"table","name":"D1","zone":"B","minCust":5,"maxCust":8,"isReserved":false,"_id":"NR7LNE7Qlpd2N2TV"}
+{"table":"table","name":"A12","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"R4bJkZS3cfJjWLlw"}
+{"table":"table","name":"C3","zone":"B","minCust":3,"maxCust":4,"isReserved":false,"_id":"T6JOK17v2X6QOSpR"}
+{"table":"table","name":"A6","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"UTf3s70QW39yiLrq"}
+{"table":"table","name":"C1","zone":"B","minCust":3,"maxCust":4,"isReserved":false,"_id":"UUgwB8VyfDXjMFUc"}
+{"table":"table","name":"A11","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"Z5Z2HnJ68Mr5Wp7h"}
+{"table":"table","name":"A3","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"e3J7NNjEt7Cf5LX0"}
+{"table":"table","name":"D2","zone":"B","minCust":5,"maxCust":8,"isReserved":false,"_id":"idVQqsSevMlchkF7"}
+{"table":"table","name":"A1","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"lk7WLqP2Tn8tEJMF"}
+{"table":"table","name":"A4","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"qF98Wn6dms8QXNMa"}
+{"table":"table","name":"C6","zone":"B","minCust":3,"maxCust":4,"isReserved":false,"_id":"ryRSxdbGiPjktNyy"}
+{"code":"LUCKY TWO","description":"Discount 20% for 2 customer when they present a coupon code as \"LUCKY TWO\"","table":"promotions","discount":20,"minCust":2,"maxCust":0,"operatorWithPrice":"and","priceMoreThan":0,"mod":2,"isAutoUse":false,"_id":"t4UdoaPubNbkMia3"}
+{"code":"","description":"Discount 25% when the bill is over 6000 Bath but it exclude all promotion.","table":"promotions","discount":25,"minCust":0,"maxCust":0,"operatorWithPrice":"and","priceMoreThan":6000,"mod":0,"isAutoUse":true,"_id":"tokdoeBuaNbkFka4"}
+{"table":"table","name":"B1","zone":"B","minCust":2,"maxCust":2,"isReserved":false,"_id":"vU2PZO2DhSjvfw6a"}
+{"table":"table","name":"C5","zone":"B","minCust":3,"maxCust":4,"isReserved":false,"_id":"vVjGTFyEreWpmcNV"}
+{"table":"table","name":"A5","zone":"A","minCust":1,"maxCust":1,"isReserved":false,"_id":"z07JokEnpvjgBc2M"}
+{"table":"table","name":"B4","zone":"B","minCust":2,"maxCust":2,"isReserved":false,"_id":"zDhIQZmIzDMueUNB"}
+{"table":"table","name":"B3","zone":"B","minCust":2,"maxCust":2,"isReserved":false,"_id":"zxtMN6egmOLR3ZD3"}
