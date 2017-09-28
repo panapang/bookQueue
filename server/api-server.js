@@ -5,11 +5,6 @@ var Datastore = require('nedb');
 var app = express();
 var db = new Datastore({ filename: 'restaurant.db', autoload: true });
 
-var sanitizeTitle = function (title) {
-    // http://stackoverflow.com/a/7764370/349353
-    return title.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
-};
-
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -34,7 +29,7 @@ app.post('/promotions/:id', function (req, res) {
         res.json(err);
     }
 
-    db.update({ _id: data._id }, data, function (err, newDoc) {
+    db.update({ _id: data._id }, { $set: data }, function (err, newDoc) {
         res.json(newDoc);
     })
 });
@@ -75,6 +70,40 @@ app.get('/restaurant/', function (req, res) {
         };
 
         res.json(docs);
+    });
+});
+
+app.post('/reserve/', function (req, res) {
+    let data = req.body;
+    db.findOne(
+        {
+            table: 'table',
+            minCust: { $lte: data.guests },
+            maxCust: { $gte: data.guests },
+            isReserved: false
+        },
+        {
+            minCust: 0,
+            maxCust: 0
+        }
+    ).exec(function (err, docs) {
+        if (err) {
+            res.statusCode = 404;
+            res.json(err);
+        };
+
+        if (docs && docs._id) {
+            //overide
+            docs['isReserved'] = true;
+
+            db.update({ _id: docs._id }, { $set: docs });
+
+            docs['isFull'] = false;
+
+            res.json(docs);
+        } else {
+            res.json({ isFull: true });
+        }
     });
 });
 
