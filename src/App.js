@@ -3,7 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 import { Col, Grid, Nav, NavItem, Row } from 'react-bootstrap';
 
 import Booking from './components/Booking';
-import Promotion from './components/Promotion';
+import ListPromotion from './components/ListPromotion';
+import PromotionPage from './components/PromotionPage';
+import NewPromotionPage from './components/NewPromotionPage';
 
 import './App.css';
 
@@ -18,7 +20,9 @@ const Main = () => (
   <main>
     <Switch>
       <Route exact path="/" component={Booking} />
-      <Route path="/promotions" component={Promotion} />
+      <Route exact path="/promotions" component={ListPromotion} />
+      <Route path="/promotions/:_id" component={PromotionPage} />
+      <Route exact path="/createpromotion" component={NewPromotionPage} />
     </Switch>
   </main>
 )

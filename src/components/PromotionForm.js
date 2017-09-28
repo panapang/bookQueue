@@ -76,7 +76,7 @@ class PromotionForm extends React.Component {
                     <ControlLabel>Or check price over</ControlLabel>
                     <FormControl componentClass="select" placeholder="select"
                         name="operatorWithPrice"
-                        value={this.props.operatorWithPrice}
+                        value={this.props.promotion.operatorWithPrice}
                         onChange={this.props.onChange}>
                         <option value="and">No</option>
                         <option value="or">Yes</option>

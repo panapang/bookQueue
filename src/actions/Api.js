@@ -1,5 +1,14 @@
 function getRestaurant(cb) {
-    return fetch('restaurant', {
+    return fetch('/restaurant', {
+        accept: "application/json"
+    })
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(cb);
+}
+
+function getPromotion(id, cb) {
+    return fetch('/promotions/' + id, {
         accept: "application/json"
     })
         .then(checkStatus)
@@ -8,7 +17,7 @@ function getRestaurant(cb) {
 }
 
 function getPromotions(cb) {
-    return fetch('promotions', {
+    return fetch('/promotions', {
         accept: "application/json"
     })
         .then(checkStatus)
@@ -22,6 +31,35 @@ function createPromotion(promotion) {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(promotion)
+    });
+
+
+    return fetch(request).then(response => {
+        return response.json();
+    }).catch(error => {
+        return error;
+    });
+}
+
+function updatePromotion(promotion) {
+    const headers = { 'Content-Type': 'application/json' };
+    const request = new Request('/promotions/' + promotion._id, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(promotion)
+    });
+
+
+    return fetch(request).then(response => {
+        return response.json();
+    }).catch(error => {
+        return error;
+    });
+}
+
+function deletePromotion(id) {
+    const request = new Request('/promotions/' + id, {
+        method: 'DELETE'
     });
 
 
@@ -47,5 +85,5 @@ function parseJSON(response) {
     return response.json();
 }
 
-const Api = { getRestaurant, getPromotions, createPromotion };
+const Api = { getRestaurant, getPromotion, getPromotions, createPromotion, updatePromotion, deletePromotion };
 export default Api;

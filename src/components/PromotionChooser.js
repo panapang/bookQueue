@@ -35,7 +35,7 @@ class PromotionChooser extends React.Component {
 
   render() {
     const item = (itemData) => {
-      return <PromotionChooserRow key={itemData.id} {...itemData} active={itemData.active}
+      return <PromotionChooserRow key={itemData._id} {...itemData} active={itemData.active}
         selectedPromotion={this.selectedPromotion} unselectedPromotion={this.unselectedPromotion} />
     };
 
