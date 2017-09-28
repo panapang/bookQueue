@@ -4,16 +4,16 @@ import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import { expect } from 'chai';
 
-import Booking from '../components/Booking';
+import Bill from '../components/Bill/Bill';
 
 configure({ adapter: new Adapter() });
 
-const wrapper = shallow(<Booking />);
+const wrapper = shallow(<Bill />);
 
-describe('<Booking />', () => {
+describe('<Bill />', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Booking />, div);
+    ReactDOM.render(<Bill />, div);
   });
 
   it('should be true when check isInPromotion case id with member', function () {
