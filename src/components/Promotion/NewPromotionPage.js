@@ -1,11 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 
-import Api from '../actions/Api';
+import Api from '../../actions/Api';
 import PromotionForm from './PromotionForm';
 
-class PromotionPage extends React.Component {
+class NewPromotionPage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -23,21 +22,15 @@ class PromotionPage extends React.Component {
       }
     };
 
-    Api.getPromotion(props.match.params._id).then(res => (
-      res ? this.setState({ promotion: res }) : this.props.history.push('/promotions')
-    ));
-
     this.savePromotion = this.savePromotion.bind(this);
     this.updatePromotionState = this.updatePromotionState.bind(this);
-    this.deletePromotion = this.deletePromotion.bind(this);
   }
 
   savePromotion(e) {
     e.preventDefault();
-    this.setState({ saving: true });
-    Api.updatePromotion(this.state.promotion).then(() =>
+    Api.createPromotion(this.state.promotion).then(() => (
       this.props.history.push('/promotions')
-    );
+    ));
   }
 
   updatePromotionState(e) {
@@ -48,19 +41,10 @@ class PromotionPage extends React.Component {
     return this.setState({ promotion: promotion });
   }
 
-  deletePromotion(event) {
-    Api.deletePromotion(this.state.promotion._id).then(() => (
-      this.props.history.push('/promotions')
-    ));
-  }
-
   render() {
     return (
       <div>
-        <h2>Edit Promotion</h2>
-
-        <Button bsStyle="danger" onClick={this.deletePromotion}>Delete</Button>
-
+        <h2>Create Promotion</h2>
         <PromotionForm
           promotion={this.state.promotion}
           onSave={this.savePromotion}
@@ -70,4 +54,4 @@ class PromotionPage extends React.Component {
   }
 }
 
-export default withRouter(PromotionPage);
+export default withRouter(NewPromotionPage);

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Col, ControlLabel, FormGroup, FormControl, Panel, Row } from 'react-bootstrap';
 import PromotionChooser from './PromotionChooser';
-import Api from "../actions/Api";
+import Api from '../../actions/Api';
 
-class Booking extends React.Component {
+class Bill extends React.Component {
 
   constructor(props) {
     super(props);
@@ -146,7 +146,7 @@ class Booking extends React.Component {
       <Panel>
         <Row>
           <Col xs={12}>
-            <h1>Booking</h1>
+            <h1>Bill</h1>
             <hr />
           </Col>
         </Row>
@@ -189,4 +189,4 @@ class Booking extends React.Component {
   }
 }
 
-export default Booking;
+export default Bill;
