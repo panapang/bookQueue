@@ -74,7 +74,7 @@ app.get('/restaurant/', function (req, res) {
 });
 
 app.post('/reserve/', function (req, res) {
-    let data = req.body;
+    const data = req.body;
     db.findOne(
         {
             table: 'table',
@@ -95,6 +95,12 @@ app.post('/reserve/', function (req, res) {
         if (docs && docs._id) {
             //overide
             docs['isReserved'] = true;
+
+            //set
+            docs['reserved'] = {
+                guests: data.guests,
+                checkin: new Date()
+            };
 
             db.update({ _id: docs._id }, { $set: docs });
 
