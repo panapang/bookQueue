@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import { expect } from 'chai';
+import fetch from 'isomorphic-fetch'
 
 import Bill from '../components/Bill/Bill';
 

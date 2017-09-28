@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch'
-
 function getRestaurant(cb) {
     return fetch('/restaurant', {
         accept: "application/json"
