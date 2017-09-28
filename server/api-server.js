@@ -27,6 +27,24 @@ app.post('/promotions/', function (req, res) {
     })
 });
 
+app.post('/promotions/:id', function (req, res) {
+    let data = req.body;
+    if (data._id !== req.params.id) {
+        res.statusCode = 404;
+        res.json(err);
+    }
+
+    db.update({ _id: data._id }, data, function (err, newDoc) {
+        res.json(newDoc);
+    })
+});
+
+app.delete('/promotions/:id', function (req, res) {
+    db.remove({ _id: req.params.id }, {}, function (err, numRemoved) {
+        res.json(numRemoved);
+    });
+});
+
 app.get('/promotions/', function (req, res) {
     db.find({ table: 'promotions' }).sort({ id: 1 }).exec(function (err, docs) {
         if (err) {
@@ -38,14 +56,25 @@ app.get('/promotions/', function (req, res) {
     });
 });
 
-app.get('/restaurant/', function (req, res) {
-    db.find({ table: 'restaurant' }).exec(function (err, docs) {
+app.get('/promotions/:id', function (req, res) {
+    db.findOne({ table: 'promotions', _id: req.params.id }).sort({ id: 1 }).exec(function (err, docs) {
         if (err) {
             res.statusCode = 404;
             res.json(err);
         };
 
-        res.json(docs[0]);
+        res.json(docs);
+    });
+});
+
+app.get('/restaurant/', function (req, res) {
+    db.findOne({ table: 'restaurant' }).exec(function (err, docs) {
+        if (err) {
+            res.statusCode = 404;
+            res.json(err);
+        };
+
+        res.json(docs);
     });
 });
 
