@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Col, Grid, Nav, NavItem, Row } from 'react-bootstrap';
 
-import Reservation from './components/Reservation/Reservation';
-import Bill from './components/Bill/Bill';
-import ListPromotion from './components/Promotion/ListPromotion';
-import PromotionPage from './components/Promotion/PromotionPage';
-import NewPromotionPage from './components/Promotion/NewPromotionPage';
+import Reservation from './Reservation/Reservation';
+import Bill from './Bill/Bill';
+import ListPromotion from './Promotion/ListPromotion';
+import Promotion from '../containers/Promotion';
+import PromotionPage from './Promotion/PromotionPage';
+import NewPromotionPage from './Promotion/NewPromotionPage';
 
 import './App.css';
 
@@ -23,7 +24,7 @@ const Main = () => (
     <Switch>
       <Route exact path="/" component={Reservation} />
       <Route exact path="/bill" component={Bill} />
-      <Route exact path="/promotions" component={ListPromotion} />
+      <Route exact path="/promotions" component={Promotion} />
       <Route path="/promotions/:_id" component={PromotionPage} />
       <Route exact path="/createpromotion" component={NewPromotionPage} />
     </Switch>

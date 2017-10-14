@@ -8,20 +8,10 @@ class ListPromotion extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      promotions: []
-    };
-  }
-
-  componentDidMount() {
-    Api.getPromotions(res => {
-      this.setState({ promotions: res });
-    });
   }
 
   render() {
-    var promotionRows = this.state.promotions.map(promotion => (
+    var promotionRows = this.props.promotions.map(promotion => (
       <tr key={promotion._id}>
         <td>{promotion.code}</td>
         <td>{promotion.description}</td>
@@ -33,8 +23,6 @@ class ListPromotion extends React.Component {
 
     return (
       <div>
-        <h1>Manage Promotions</h1>
-        <hr />
         <Link to={'/createpromotion'} className="btn btn-primary pull-right">Add New</Link>
 
         <Table>
