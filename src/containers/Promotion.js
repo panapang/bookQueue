@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 
-import ListPromotion from '../components/Promotion/ListPromotion';
-import { loadPromotions } from '../actions/promotion'
+import { PromotionsList } from '../components/Promotion/PromotionsList';
+import { loadPromotions, deletePromotion } from '../actions/promotion'
 
 class Promotion extends React.Component {
   constructor(props) {
@@ -21,14 +22,26 @@ class Promotion extends React.Component {
     this.onReloadPromotions();
   }
 
+  deletePromotion = (promotion) => {
+    this.props.deletePromotion(promotion);
+  }
+
   render() {
+    const {
+      params,
+      promotions,
+    } = this.props;
+
     return (
       <div>
         <h1>Manage Promotions</h1>
         <hr />
-        <ListPromotion
-          promotions={this.props.promotions}
-          onReloadPages={this.onReloadPromotions} />
+        <div className="pull-right">
+          <Link to="/createpromotion" className="btn btn-primary">New Promotion</Link>
+        </div>
+        <PromotionsList
+          promotions={promotions}
+          onDelete={this.deletePromotion} />
       </div>
     );
   }
@@ -36,5 +49,8 @@ class Promotion extends React.Component {
 
 export default connect(
   (state) => ({ promotions: state.promotions }),
-  { onLoadPromotions: loadPromotions }
+  {
+    onLoadPromotions: loadPromotions,
+    deletePromotion: deletePromotion
+  }
 )(Promotion)

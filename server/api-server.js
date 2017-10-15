@@ -36,7 +36,18 @@ app.post('/promotions/:id', function (req, res) {
 
 app.delete('/promotions/:id', function (req, res) {
     db.remove({ _id: req.params.id }, {}, function (err, numRemoved) {
-        res.json(numRemoved);
+        db.find({ table: 'promotions' }).exec(function (err, docs) {
+            if (err) {
+                res.statusCode = 404;
+                res.json(err);
+            };
+            var data = {};
+
+            data['success'] = true;
+            data['promotions'] = docs;
+
+            res.json(data);
+        });
     });
 });
 

@@ -4,7 +4,7 @@ import { Col, Grid, Nav, NavItem, Row } from 'react-bootstrap';
 
 import Reservation from './Reservation/Reservation';
 import Bill from './Bill/Bill';
-import ListPromotion from './Promotion/ListPromotion';
+import PromotionsList from './Promotion/PromotionsList';
 import Promotion from '../containers/Promotion';
 import PromotionPage from './Promotion/PromotionPage';
 import NewPromotionPage from './Promotion/NewPromotionPage';
