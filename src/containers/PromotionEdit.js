@@ -2,7 +2,8 @@ import React from 'react';
 import { Checkbox, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { createPromotion, getPromotion, updatePromotion } from '../actions/promotion'
+import { createPromotion, getPromotion, updatePromotion } from '../actions/promotion';
+import { getPromotionById } from '../reducers/promotions';
 
 class PromotionEdit extends React.Component {
   constructor(props) {
@@ -27,18 +28,19 @@ class PromotionEdit extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  /* shouldComponentUpdate(nextProps) {
-    return this.props.promotion !== nextProps.promotion;
+  shouldComponentUpdate(nextProps) {
+    return this.state.promotionId || (this.props.promotion !== nextProps.promotion);
   }
- */
+
   componentWillReceiveProps(nextProps) {
-    // if (!isEqual(nextProps.promotion, this.state.promotion)) {
     this.setState({ promotion: nextProps.promotion });
-    //}
   }
 
   componentDidMount() {
     if (this.state.promotionId) {
+      /* const { onLoadPromotion, match: { params: { id } } } = this.props
+
+      onLoadPromotion(id) */
       this.props.onLoadPromotion(this.state.promotionId);
     }
   }
@@ -55,7 +57,9 @@ class PromotionEdit extends React.Component {
     e.preventDefault();
 
     if (this.state.promotionId) {
-      this.props.updatePromotion(this.state.promotion);
+      this.props.updatePromotion(this.state.promotion).then(() => (
+        this.props.history.push('/promotions')
+      ));
     } else {
       this.props.createPromotion(this.state.promotion).then(() => (
         this.props.history.push('/promotions')
@@ -166,9 +170,10 @@ class PromotionEdit extends React.Component {
 }
 
 export default connect(
-  (state) => ({ promotion: state.promotion }),
+  (state, ownProps) => ({ promotion: getPromotionById(state, ownProps.match.params._id) }),
   {
     onLoadPromotion: getPromotion,
     createPromotion: createPromotion,
+    updatePromotion: updatePromotion
   }
 )(PromotionEdit)
