@@ -4,7 +4,7 @@ import { PromotionsListRow } from './PromotionsListRow';
 
 export const PromotionsList = ({ promotions, onDelete }) => {
   return (
-    <table className="table table-hover">
+    <Table className="table table-hover">
       <thead>
         <tr>
           <th>Promotion Code</th>
@@ -15,6 +15,6 @@ export const PromotionsList = ({ promotions, onDelete }) => {
       <tbody>
         {promotions.map(promotion => PromotionsListRow({ promotion, onDelete }))}
       </tbody>
-    </table>
+    </Table>
   )
 };

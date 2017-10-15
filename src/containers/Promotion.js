@@ -1,25 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { PromotionsList } from '../components/Promotion/PromotionsList';
-import { loadPromotions, deletePromotion } from '../actions/promotion'
+import { getPromotions, deletePromotion } from '../actions/promotion';
 
 class Promotion extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   shouldComponentUpdate(nextProps) {
     return this.props.promotions !== nextProps.promotions;
   }
 
-  onReloadPromotions = () => {
-    this.props.onLoadPromotions();
-  }
-
   componentDidMount() {
-    this.onReloadPromotions();
+    this.props.onLoadPromotions();
   }
 
   deletePromotion = (promotion) => {
@@ -27,10 +19,7 @@ class Promotion extends React.Component {
   }
 
   render() {
-    const {
-      params,
-      promotions,
-    } = this.props;
+    const { promotions } = this.props;
 
     return (
       <div>
@@ -50,7 +39,7 @@ class Promotion extends React.Component {
 export default connect(
   (state) => ({ promotions: state.promotions }),
   {
-    onLoadPromotions: loadPromotions,
+    onLoadPromotions: getPromotions,
     deletePromotion: deletePromotion
   }
 )(Promotion)

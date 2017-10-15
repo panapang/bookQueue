@@ -4,10 +4,9 @@ import { Col, Grid, Nav, NavItem, Row } from 'react-bootstrap';
 
 import Reservation from './Reservation/Reservation';
 import Bill from './Bill/Bill';
-import PromotionsList from './Promotion/PromotionsList';
 import Promotion from '../containers/Promotion';
+import PromotionEdit from '../containers/PromotionEdit';
 import PromotionPage from './Promotion/PromotionPage';
-import NewPromotionPage from './Promotion/NewPromotionPage';
 
 import './App.css';
 
@@ -26,7 +25,7 @@ const Main = () => (
       <Route exact path="/bill" component={Bill} />
       <Route exact path="/promotions" component={Promotion} />
       <Route path="/promotions/:_id" component={PromotionPage} />
-      <Route exact path="/createpromotion" component={NewPromotionPage} />
+      <Route exact path="/createpromotion" component={PromotionEdit} />
     </Switch>
   </main>
 )

@@ -25,7 +25,6 @@ class PromotionPage extends React.Component {
 
     this.savePromotion = this.savePromotion.bind(this);
     this.updatePromotionState = this.updatePromotionState.bind(this);
-    this.deletePromotion = this.deletePromotion.bind(this);
   }
 
   componentDidMount() {
@@ -50,18 +49,10 @@ class PromotionPage extends React.Component {
     return this.setState({ promotion: promotion });
   }
 
-  deletePromotion(event) {
-    Api.deletePromotion(this.state.promotion._id).then(() => (
-      this.props.history.push('/promotions')
-    ));
-  }
-
   render() {
     return (
       <div>
         <h2>Edit Promotion</h2>
-
-        <Button bsStyle="danger" className="pull-right" onClick={this.deletePromotion}>Delete</Button>
 
         <PromotionForm
           promotion={this.state.promotion}
