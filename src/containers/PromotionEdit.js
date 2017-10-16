@@ -34,9 +34,6 @@ class PromotionEdit extends React.Component {
 
   componentDidMount() {
     if (this.state.promotionId) {
-      /* const { onLoadPromotion, match: { params: { id } } } = this.props
-
-      onLoadPromotion(id) */
       this.props.onLoadPromotion(this.state.promotionId);
     }
   }
