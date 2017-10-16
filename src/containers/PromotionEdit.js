@@ -28,10 +28,6 @@ class PromotionEdit extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.state.promotionId || (this.props.promotion !== nextProps.promotion);
-  }
-
   componentWillReceiveProps(nextProps) {
     this.setState({ promotion: nextProps.promotion });
   }
